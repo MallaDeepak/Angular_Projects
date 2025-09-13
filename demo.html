@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitor Dashboard Time Fix Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .component-demo {
+            margin: 20px 0;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: relative;
+            min-height: 200px;
+        }
+        .component-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        .component-description {
+            color: #666;
+            margin-bottom: 15px;
+        }
+        .time-display {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background-color: #f5f5f5;
+            padding: 8px 12px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        .time-label {
+            font-weight: bold;
+            margin-right: 8px;
+        }
+        .time-value {
+            font-family: monospace;
+            color: #333;
+        }
+        .status-fixed {
+            color: #28a745;
+            font-weight: bold;
+        }
+        .status-correct {
+            color: #17a2b8;
+            font-weight: bold;
+        }
+        .header {
+            text-align: center;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Monitor Dashboard Time Fix Demo</h1>
+            <p>Demonstrating the fix from Berlin Local Time to UTC Time for consistency with chart data</p>
+        </div>
+
+        <div class="component-demo">
+            <div class="component-title">lib-live-dashboard Component <span class="status-fixed">✅ FIXED</span></div>
+            <div class="component-description">
+                Used by A15andD15PuntualityComponent and MultiLiveTickerComponent<br>
+                <strong>Before:</strong> Showed Berlin time (Europe/Berlin timezone) with "Local Time" label<br>
+                <strong>After:</strong> Now shows UTC time with "UTC Time" label
+            </div>
+            <div class="time-display">
+                <span class="time-label">UTC Time:</span>
+                <span class="time-value" id="lib-dashboard-time">--:--</span>
+            </div>
+        </div>
+
+        <div class="component-demo">
+            <div class="component-title">LiveTicker4yComponent <span class="status-correct">✅ ALREADY CORRECT</span></div>
+            <div class="component-description">
+                This component was already correctly implemented with UTC time<br>
+                <strong>Implementation:</strong> Uses UTC timezone with proper "UTC Time" label
+            </div>
+            <div class="time-display">
+                <span class="time-label">UTC Time:</span>
+                <span class="time-value" id="live-ticker-time">--:--</span>
+            </div>
+        </div>
+
+        <div class="component-demo">
+            <div class="component-title">A15andD15PuntualityComponent <span class="status-fixed">✅ FIXED (inherits from lib-live-dashboard)</span></div>
+            <div class="component-description">
+                This component uses lib-live-dashboard, so it automatically inherits the UTC time fix<br>
+                <strong>Before:</strong> Showed Berlin time via lib-live-dashboard<br>
+                <strong>After:</strong> Now shows UTC time via updated lib-live-dashboard
+            </div>
+            <div class="time-display">
+                <span class="time-label">UTC Time:</span>
+                <span class="time-value" id="puntuality-time">--:--</span>
+            </div>
+        </div>
+
+        <div class="component-demo">
+            <div class="component-title">MultiLiveTickerComponent <span class="status-fixed">✅ FIXED (inherits from lib-live-dashboard)</span></div>
+            <div class="component-description">
+                This component uses lib-live-dashboard, so it automatically inherits the UTC time fix<br>
+                <strong>Before:</strong> Showed Berlin time via lib-live-dashboard<br>
+                <strong>After:</strong> Now shows UTC time via updated lib-live-dashboard
+            </div>
+            <div class="time-display">
+                <span class="time-label">UTC Time:</span>
+                <span class="time-value" id="multi-ticker-time">--:--</span>
+            </div>
+        </div>
+
+        <div style="background-color: white; padding: 20px; border-radius: 8px; margin-top: 30px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+            <h3>Summary of Changes</h3>
+            <ul>
+                <li><strong>lib-live-dashboard.component.ts:</strong> Changed timezone from 'Europe/Berlin' to 'UTC'</li>
+                <li><strong>lib-live-dashboard.component.html:</strong> Changed display text from "Local Time" to "UTC Time"</li>
+                <li><strong>Result:</strong> All monitor dashboard pages now show consistent UTC time matching chart data</li>
+                <li><strong>Berlin Time (for comparison):</strong> <span id="berlin-time">--:--</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        function updateTimes() {
+            // UTC time (used by all components after the fix)
+            const utcTime = new Date().toLocaleTimeString('en-GB', {
+                timeZone: 'UTC',
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false,
+            });
+
+            // Berlin time (for comparison - this was the old implementation)
+            const berlinTime = new Date().toLocaleTimeString('en-GB', {
+                timeZone: 'Europe/Berlin',
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false,
+            });
+
+            // Update all UTC time displays
+            document.getElementById('lib-dashboard-time').textContent = utcTime;
+            document.getElementById('live-ticker-time').textContent = utcTime;
+            document.getElementById('puntuality-time').textContent = utcTime;
+            document.getElementById('multi-ticker-time').textContent = utcTime;
+            
+            // Show Berlin time for comparison
+            document.getElementById('berlin-time').textContent = berlinTime + ' (Berlin)';
+        }
+
+        // Update times immediately and then every second
+        updateTimes();
+        setInterval(updateTimes, 1000);
+    </script>
+</body>
+</html>
