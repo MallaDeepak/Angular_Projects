@@ -1,0 +1,12 @@
+.puntuality-container {
+  width: 100%;
+  height: 100%;
+}
+
+.puntuality-container h2 {
+  text-align: center;
+  padding: 20px;
+  margin: 0;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #dee2e6;
+}

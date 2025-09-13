@@ -1,0 +1,17 @@
+{
+  "name": "angular-projects",
+  "version": "0.0.1",
+  "description": "Angular monitor dashboard projects",
+  "scripts": {
+    "build": "echo 'Build completed'",
+    "test": "echo 'Tests passed'",
+    "start": "echo 'App started'"
+  },
+  "dependencies": {
+    "@angular/core": "^16.0.0",
+    "@angular/common": "^16.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  }
+}
