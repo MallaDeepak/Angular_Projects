@@ -25,9 +25,9 @@ export class LibLiveDashboardComponent implements OnInit, OnDestroy {
   }
 
   private updateTime(): void {
-    // Current implementation with Berlin timezone (this is what needs to be fixed)
+    // Updated implementation with UTC timezone for consistency with chart data
     this.localTime = new Date().toLocaleTimeString('en-GB', {
-      timeZone: 'Europe/Berlin',
+      timeZone: 'UTC',
       hour: '2-digit',
       minute: '2-digit',
       hour12: false,
